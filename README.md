@@ -1,3 +1,9 @@
+<div align="center">
+  <img src="images/Output 1.PNG" width="40%"/>
+  <img src="images/output 2.PNG" width="36%"/>
+
+
+</div>
 # ❤️ Heart Disease Prediction using Logistic Regression
 
 A predictive machine learning project using **Logistic Regression** to assess the likelihood of heart disease based on patient health indicators.  
