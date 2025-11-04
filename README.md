@@ -119,6 +119,11 @@ jupyter notebook notebooks/heart_disease_analysis.ipynb
 
 - Improved ability to design reproducible ML pipelines
 
+### 👤 Author
+[**Kazi Umar**](https://github.com/UK183)<br>
+Linkedin profile: https://www.linkedin.com/in/umar-kazi18  
+💼 Data Analyst | ML Engineer | Data Science & AI Enthusiast | Power BI | Python | SQL
+
 # ⚠️ Disclaimer: 
 This project is for educational and portfolio purposes only.
 It is not intended for clinical or diagnostic use without professional validation.
