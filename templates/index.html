@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heart Disease Prediction</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    form {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input {
+      width: 250px;
+      margin: 8px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .clear-btn {
+      background: #dc3545;
+    }
+
+    .clear-btn:hover {
+      background: #a71d2a;
+    }
+
+    /* Popup overlay */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup-content {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      font-size: 24px;
+      font-weight: bold;
+      max-width: 80%;
+    }
+
+    .positive {
+      color: #c82333;
+    }
+
+    .negative {
+      color: #28a745;
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      background: #007bff;
+      color: #fff;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Heart Disease Prediction</h1>
+
+  <form id="predictionForm" action="/predict" method="post" onsubmit="return validateForm()">
+    <input type="text" name="male" placeholder="Male (0 or 1)" required><br>
+    <input type="text" name="age" placeholder="Age" required><br>
+    <input type="text" name="education" placeholder="Education (1–4)" required><br>
+    <input type="text" name="currentSmoker" placeholder="Current Smoker (0 or 1)" required><br>
+    <input type="text" name="cigsPerDay" placeholder="Cigarettes per Day" required><br>
+    <input type="text" name="BPMeds" placeholder="BP Meds (0 or 1)" required><br>
+    <input type="text" name="prevalentStroke" placeholder="Prevalent Stroke (0 or 1)" required><br>
+    <input type="text" name="prevalentHyp" placeholder="Prevalent Hypertension (0 or 1)" required><br>
+    <input type="text" name="diabetes" placeholder="Diabetes (0 or 1)" required><br>
+    <input type="text" name="totChol" placeholder="Total Cholesterol" required><br>
+    <input type="text" name="sysBP" placeholder="Systolic BP" required><br>
+    <input type="text" name="diaBP" placeholder="Diastolic BP" required><br>
+    <input type="text" name="BMI" placeholder="BMI" required><br>
+    <input type="text" name="heartRate" placeholder="Heart Rate" required><br>
+    <input type="text" name="glucose" placeholder="Glucose" required><br>
+
+    <button type="submit">Predict</button>
+    <button type="button" class="clear-btn" onclick="clearForm()">Clear</button>
+  </form>
+
+  <!-- Popup Modal -->
+  <div class="popup" id="resultPopup">
+    <div class="popup-content" id="popupContent">
+      <span id="popupMessage"></span><br>
+      <button class="close-btn" onclick="closePopup()">Close</button>
+    </div>
+  </div>
+
+  {% if prediction_text %}
+  <script>
+    // Show popup with prediction result
+    window.onload = function() {
+      const prediction = "{{ prediction_text }}";
+      const popup = document.getElementById("resultPopup");
+      const msg = document.getElementById("popupMessage");
+
+      popup.style.display = "flex";
+
+      if (prediction.includes("Positive")) {
+        msg.innerHTML = `⚠️ <span class='positive'>${prediction}</span>`;
+      } else if (prediction.includes("Negative")) {
+        msg.innerHTML = `✅ <span class='negative'>${prediction}</span>`;
+      } else {
+        msg.innerHTML = prediction;
+      }
+    }
+  </script>
+  {% endif %}
+
+  <script>
+    function validateForm() {
+      const inputs = document.querySelectorAll("input[required]");
+      for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].value.trim() === "") {
+          alert("Please fill in all fields before predicting.");
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function clearForm() {
+      document.getElementById("predictionForm").reset();
+    }
+
+    function closePopup() {
+      document.getElementById("resultPopup").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
